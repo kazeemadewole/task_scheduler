@@ -11,7 +11,7 @@ export class TaskEntity extends BaseEntity {
   @Column({ unique: true })
   name: string;
 
-  @Column({ unique: true })
+  @Column()
   description: string;
 
   @Column({ type: 'enum', enum: TaskStatus, default: TaskStatus.ACTIVE })

@@ -9,7 +9,6 @@ import {
   ResetPasswordInput,
 } from './dto/inputs';
 import {
-  AdminSignUpResponse,
   EmailVerificationResponse,
   ForgotPasswordResponse,
   ResetPasswordResponse,
@@ -17,6 +16,7 @@ import {
 } from './dto/response';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthUser } from './decorators/auth-user.decorator';
+import { ForgotPasswordDto } from './dto/inputs/forgotPassword.input';
 
 @Controller('auth')
 export class AuthController {
@@ -26,17 +26,6 @@ export class AuthController {
   create(@Body() createUserDetails: CreateUserDto): Promise<SignUpResponse> {
     try {
       return this.authService.createUser(createUserDetails);
-    } catch (error) {
-      throw new Error(error);
-    }
-  }
-
-  @Post('create/admin')
-  admin_signup(
-    @Body() createUserDetails: AdminCreateUserDto,
-  ): Promise<AdminSignUpResponse> {
-    try {
-      return this.authService.createAdminUser(createUserDetails);
     } catch (error) {
       throw new Error(error);
     }
@@ -57,11 +46,11 @@ export class AuthController {
 
   @Post('forgot-password')
   forgotPassword(
-    @Body('email')
-    email: string,
+    @Body()
+    forgotPassword: ForgotPasswordDto,
   ): Promise<ForgotPasswordResponse> {
     try {
-      return this.authService.forgotPassword(email);
+      return this.authService.forgotPassword(forgotPassword.email);
     } catch (error) {
       throw new Error(error);
     }

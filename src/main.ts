@@ -8,6 +8,7 @@ import { TransformInterceptor } from './base/response.interceptor';
 import { TrimPipe } from './base/request.interceptor';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { RolesService } from './roles/roles.service';
 // import compression from 'compression';
 
 const server = Express();
@@ -45,6 +46,8 @@ async function bootstrap() {
   // todo: add logic to only accept specific headers
   app.enableCors();
 
+  const roleSeeder = app.get(RolesService);
+  await roleSeeder.seed();
   app.use(Express.text({ limit: '20mb', type: 'text/plain' }));
   app.use(Express.urlencoded({ limit: '50mb', extended: true }));
   app.use(Express.json({ limit: '50mb' }));

@@ -14,9 +14,7 @@ export class RoleController {
   @Post('')
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(ROLESENUM.ADMIN)
-  createRole(
-    @Body('createRoleDto') createRoleDto: CreateRoleDto,
-  ): Promise<Role> {
+  createRole(@Body() createRoleDto: CreateRoleDto): Promise<Role> {
     return this.roleService.createRole(createRoleDto);
   }
 

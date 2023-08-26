@@ -27,6 +27,7 @@ export class RolesService {
 
   async getRoleByName(role: ROLESENUM): Promise<Role> {
     role = role.toLowerCase() as unknown as ROLESENUM;
+    console.log(role);
     return this.roleRepository.findOne({ where: { name: role } });
   }
 

@@ -4,9 +4,8 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RoleGuard } from '../auth/guards/role.guard';
 import { Roles } from '../auth/decorators/role.decorator';
 import { ROLESENUM } from '../base/base.entity';
-import { GetAllUserAdminInput, TandCDetails } from './dto/inputs';
+import { TandCDetails } from './dto/inputs';
 import {
-  GetAllUserResponse,
   GetUserStatisticsResponse,
   TermsAndConditionResponse,
 } from './dto/response';
@@ -23,23 +22,6 @@ export class UserController {
   @Roles(ROLESENUM.ADMIN, ROLESENUM.USER, ROLESENUM.SUPER_ADMIN)
   async getUser(@AuthUser() user: User): Promise<User> {
     return this.userService.getUser(user.id);
-  }
-
-  @Get('/admin-get-users')
-  @UseGuards(JwtAuthGuard, RoleGuard)
-  @Roles(ROLESENUM.ADMIN, ROLESENUM.SUPER_ADMIN)
-  async getUserByAdmin(@Body() id: string): Promise<User> {
-    return this.userService.getUser(id);
-  }
-
-  @Get('user-response')
-  @UseGuards(JwtAuthGuard, RoleGuard)
-  @Roles(ROLESENUM.ADMIN, ROLESENUM.SUPER_ADMIN)
-  async getAllUserOrAdmins(
-    @AuthUser() user,
-    @Body() getAllUserInput: GetAllUserAdminInput,
-  ): Promise<GetAllUserResponse> {
-    return this.userService.getAllUsersOrAdmins(getAllUserInput);
   }
 
   @Get('admin_get_user_statistics')

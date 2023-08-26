@@ -7,11 +7,14 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthUser } from 'src/auth/decorators/auth-user.decorator';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { TaskService } from './task.service';
 
 @Controller('task')
+@UseGuards(JwtAuthGuard)
 export class TaskController {
   private log: Logger = new Logger('prospect controller');
 
@@ -35,7 +38,7 @@ export class TaskController {
     }
   }
 
-  @Get('/all')
+  @Get('/tasks/all')
   async getAllTask(@AuthUser() user) {
     try {
       return this.taskService.getAll(user.id);

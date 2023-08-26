@@ -339,6 +339,7 @@ export class AuthService extends BaseService {
 
   async login(user: User): Promise<LoginResponse> {
     try {
+      console.log({ user });
       if (!user.emailVerified) {
         throw new HttpException('Email not verified', HttpStatus.UNAUTHORIZED);
       }
@@ -387,10 +388,6 @@ export class AuthService extends BaseService {
         type: OtpType.PIN,
         usage: OtpUsage.RESET_PASSCODE,
       });
-      // await this.emailUtilService.sendEmailByNodemailer(
-      //   'Email Verification',
-      //   templateFile,
-      //   user.email,
       // );
       return {
         status: true,
