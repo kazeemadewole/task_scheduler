@@ -23,9 +23,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('create')
-  create(
-    @Body('createUserDetails') createUserDetails: CreateUserDto,
-  ): Promise<SignUpResponse> {
+  create(@Body() createUserDetails: CreateUserDto): Promise<SignUpResponse> {
     try {
       return this.authService.createUser(createUserDetails);
     } catch (error) {
@@ -35,7 +33,7 @@ export class AuthController {
 
   @Post('create/admin')
   admin_signup(
-    @Body('createUserDetails') createUserDetails: AdminCreateUserDto,
+    @Body() createUserDetails: AdminCreateUserDto,
   ): Promise<AdminSignUpResponse> {
     try {
       return this.authService.createAdminUser(createUserDetails);
@@ -47,7 +45,7 @@ export class AuthController {
   @Post('signin')
   @UseGuards(LocalAuthGuard)
   login(
-    @Body('loginUserInput') loginUserInput: LoginUserInput,
+    @Body() loginUserInput: LoginUserInput,
     @AuthUser() user: User,
   ): Promise<object> {
     try {
@@ -71,7 +69,7 @@ export class AuthController {
 
   @Post('reset-password')
   resetPassword(
-    @Body('resetPasswordInput')
+    @Body()
     resetPasswordInput: ResetPasswordInput,
   ): Promise<ResetPasswordResponse> {
     try {
@@ -83,7 +81,7 @@ export class AuthController {
 
   @Post('verify-email')
   verifyEmail(
-    @Body('email_verification_details')
+    @Body()
     email_verification_details: EmailVerificationDto,
   ): Promise<EmailVerificationResponse> {
     try {

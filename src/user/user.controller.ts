@@ -28,7 +28,7 @@ export class UserController {
   @Get('/admin-get-users')
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Roles(ROLESENUM.ADMIN, ROLESENUM.SUPER_ADMIN)
-  async getUserByAdmin(@Body('id') id: string): Promise<User> {
+  async getUserByAdmin(@Body() id: string): Promise<User> {
     return this.userService.getUser(id);
   }
 
@@ -37,7 +37,7 @@ export class UserController {
   @Roles(ROLESENUM.ADMIN, ROLESENUM.SUPER_ADMIN)
   async getAllUserOrAdmins(
     @AuthUser() user,
-    @Body('getAllUserInput') getAllUserInput: GetAllUserAdminInput,
+    @Body() getAllUserInput: GetAllUserAdminInput,
   ): Promise<GetAllUserResponse> {
     return this.userService.getAllUsersOrAdmins(getAllUserInput);
   }
@@ -57,7 +57,7 @@ export class UserController {
   @Post('terms-and-condition')
   acceptTermsandCondition(
     @AuthUser() user,
-    @Body('tandCDetails')
+    @Body()
     tandCDetails: TandCDetails,
   ): Promise<TermsAndConditionResponse> {
     try {

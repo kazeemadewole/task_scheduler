@@ -4,6 +4,7 @@ import { ROLESENUM } from '../base/base.entity';
 import { Repository } from 'typeorm';
 import { CreateRoleDto } from './dto';
 import { Role } from './model/roles.entity';
+import { rolesSeed } from '../seeds/roles';
 
 @Injectable()
 export class RolesService {
@@ -39,5 +40,18 @@ export class RolesService {
     }
 
     return false;
+  }
+
+  async seed() {
+    const createdUser = await Promise.all(
+      rolesSeed.map(async (role_user) => {
+        const checkRole = await this.getRoleByName(role_user.name);
+        if (!checkRole) {
+          await this.createRole(role_user);
+        }
+      }),
+    );
+
+    return createdUser;
   }
 }

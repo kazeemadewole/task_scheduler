@@ -20,12 +20,6 @@ export class CreateUserDto {
   lastName: string;
 
   @IsNotEmpty()
-  @IsString()
-  @MinLength(4)
-  @MaxLength(20)
-  userName: string;
-
-  @IsNotEmpty()
   @IsEmail()
   email: string;
 
@@ -42,10 +36,4 @@ export class CreateUserDto {
   //   message: 'password too weak',
   // })
   password: string;
-
-  @IsNotEmpty()
-  @IsBoolean()
-  termsAndCondition: boolean;
 }
-
-// /((?=.*/d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/
